@@ -47,7 +47,7 @@ h1 {
     color: #4a4a4a;
 }
 
-.modal-content input {
+.modal-content input, .modal-content select {
     width: 100%;
     padding: 7px;
     margin-bottom: 12px;

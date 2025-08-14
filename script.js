@@ -4,9 +4,7 @@ let fechaSeleccionada;
 let deferredPrompt;
 
 // --- Pedir permiso para notificaciones ---
-if ("Notification" in window) {
-    Notification.requestPermission();
-}
+if ("Notification" in window) Notification.requestPermission();
 
 // Inicializar calendario
 document.addEventListener('DOMContentLoaded', function () {
@@ -25,8 +23,8 @@ document.addEventListener('DOMContentLoaded', function () {
             title: t.materia,
             start: t.fecha,
             description: t.descripcion,
-            backgroundColor: "#ff7f50",
-            borderColor: "#ff4500",
+            backgroundColor: getColorByPriority(t.prioridad),
+            borderColor: "#333333",
             textColor: "#ffffff"
         }))
     });
@@ -40,17 +38,19 @@ document.getElementById('guardar').addEventListener('click', () => {
     const materia = document.getElementById('materia').value;
     const descripcion = document.getElementById('descripcion').value;
     const fecha = document.getElementById('fecha').value;
+    const categoria = document.getElementById('categoria').value;
+    const prioridad = document.getElementById('prioridad').value;
 
     if (materia && descripcion && fecha) {
-        const nuevaTarea = { materia, descripcion, fecha };
+        const nuevaTarea = { materia, descripcion, fecha, categoria, prioridad };
         tareas.push(nuevaTarea);
         localStorage.setItem("tareas", JSON.stringify(tareas));
 
         calendar.addEvent({
             title: materia,
             start: fecha,
-            backgroundColor: "#ff7f50",
-            borderColor: "#ff4500",
+            backgroundColor: getColorByPriority(prioridad),
+            borderColor: "#333333",
             textColor: "#ffffff"
         });
 
@@ -61,16 +61,23 @@ document.getElementById('guardar').addEventListener('click', () => {
     }
 });
 
-// Modal
-function abrirModal() {
-    document.getElementById('modal').style.display = "block";
+// Función para color según prioridad
+function getColorByPriority(prioridad) {
+    switch (prioridad) {
+        case "Alta": return "#e74c3c"; // rojo
+        case "Media": return "#f1c40f"; // amarillo
+        case "Baja": return "#2ecc71"; // verde
+        default: return "#3498db"; // azul
+    }
 }
+
+// Modal
+function abrirModal() { document.getElementById('modal').style.display = "block"; }
 function cerrarModal() {
     document.getElementById('modal').style.display = "none";
     document.getElementById('materia').value = "";
     document.getElementById('descripcion').value = "";
 }
-document.getElementById('cerrar').addEventListener('click', cerrarModal);
 
 // Notificaciones
 function verificarFechas() {
@@ -95,7 +102,7 @@ function verificarFechas() {
     });
 }
 
-// --- Registrar Service Worker ---
+// Service Worker
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
         navigator.serviceWorker.register('./sw.js')
@@ -104,11 +111,10 @@ if ('serviceWorker' in navigator) {
     });
 }
 
-// --- Botón instalación PWA ---
+// Botón instalación PWA
 window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
     deferredPrompt = e;
-
     const btnInstall = document.createElement('button');
     btnInstall.textContent = "Instalar EstudiApp";
     btnInstall.style.cssText = "position:fixed;bottom:20px;right:20px;padding:10px 20px;background:#2575fc;color:white;border:none;border-radius:8px;cursor:pointer;z-index:1000;";
@@ -117,11 +123,8 @@ window.addEventListener('beforeinstallprompt', (e) => {
     btnInstall.addEventListener('click', () => {
         deferredPrompt.prompt();
         deferredPrompt.userChoice.then((choiceResult) => {
-            if (choiceResult.outcome === 'accepted') {
-                console.log('Usuario aceptó instalar la app');
-            } else {
-                console.log('Usuario rechazó instalar la app');
-            }
+            if (choiceResult.outcome === 'accepted') console.log('Usuario aceptó instalar la app');
+            else console.log('Usuario rechazó instalar la app');
             deferredPrompt = null;
             btnInstall.remove();
         });
