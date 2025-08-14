@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EstudiApp - Agenda Estudiantil</title>
+    <link rel="stylesheet" href="style.css">
+
+    <!-- FullCalendar CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet">
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#2575fc">
+</head>
+<body>
+    <h1>📅 EstudiApp</h1>
+
+    <div id="calendar"></div>
+
+    <!-- Modal para agregar tarea -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <h2>Nueva tarea</h2>
+            <label>Materia:</label>
+            <input type="text" id="materia" placeholder="Ej: Matemática">
+            <label>Descripción:</label>
+            <input type="text" id="descripcion" placeholder="Ej: Examen capítulo 5">
+            <label>Fecha:</label>
+            <input type="date" id="fecha">
+            <button id="guardar">Guardar</button>
+            <button id="cerrar">Cancelar</button>
+        </div>
+    </div>
+
+    <!-- FullCalendar JS -->
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
+
