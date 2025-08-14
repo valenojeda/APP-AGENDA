@@ -1,8 +1,8 @@
 {
   "packageId": "app.netlify.eduagenda.twa",
   "host": "eduagenda.netlify.app",
-  "name": "(Eduagenda)",
-  "launcherName": "(EduAgenda)",
+  "name": "EduAgneda",
+  "launcherName": "EduAgenda",
   "display": "standalone",
   "themeColor": "#2575FC",
   "themeColorDark": "#000000",
@@ -14,7 +14,6 @@
   "enableNotifications": true,
   "startUrl": "/",
   "iconUrl": "https://eduagenda.netlify.app/icon-512.png",
-  "maskableIconUrl": "https://eduagenda.netlify.app/icon-512.png",
   "splashScreenFadeOutDuration": 300,
   "signingKey": {
     "path": "C:\\Users\\valen\\Desktop\\APP AGENDA\\android.keystore",
